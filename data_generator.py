@@ -1,5 +1,9 @@
 from sympy import *
 from random import randint
+from PIL import Image
+from os import listdir
+from os.path import isfile,join
+
 
 
 def form_image(content, fix_size=True, path='data2/'):
@@ -64,9 +68,19 @@ def multi_threaded_printing(expressions):
     pool.map(form_image, expressions)
 
 
+def trip_expression(expressions_path, destination_folder):
+    files = [f for f in listdir(expressions_path) if isfile(join(expressions_path, f))]
+    for f in files:
+        img = Image.open(expressions_path + '/' + f)
+        width, height = img.size
+        img = img.crop((width - 107, 1, width, 10))
+        img.save(f'{destination_folder}/{f}')
+
 if __name__ == '__main__':
+    trip_expression('data2', 'processed')
+    exit()
     expressions = set()
-    number_of_expressions = 200
+    number_of_expressions = 1
     while len(expressions) < number_of_expressions:
         question, answer = random_addition(999999)
         expressions.update([question])
