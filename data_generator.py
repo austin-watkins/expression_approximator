@@ -76,6 +76,7 @@ def trip_expression(expressions_path, destination_folder):
         img = img.crop((width - 107, 1, width, 10))
         img.save(f'{destination_folder}/{f}')
 
+
 if __name__ == '__main__':
     trip_expression('data2', 'processed')
     exit()
