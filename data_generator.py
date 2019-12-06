@@ -75,15 +75,17 @@ def trip_expression(expressions_path, destination_folder):
     for f in files:
         img = Image.open(expressions_path + '/' + f)
         width, height = img.size
-        img = img.crop((width - 107, 1, width, 10))
+        img = img.crop((width - 110, 1, width, 10))
         img = img.convert('L')
         img.save(f'{destination_folder}/{f}')
 
 
 if __name__ == '__main__':
+    # trip_expression('unprocessed', 'processed2/')
+    # exit()
     seed(42)
     expressions = set()
-    number_of_expressions = 1000
+    number_of_expressions = 100000
     while len(expressions) < number_of_expressions:
         question, answer = random_addition(999999)
         expressions.update([question])
