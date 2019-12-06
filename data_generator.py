@@ -1,8 +1,8 @@
 from sympy import *
-from random import randint
+from random import randint, seed
 from PIL import Image
 from os import listdir, makedirs
-from os.path import isfile,join
+from os.path import isfile, join
 
 
 def form_image(content, fix_size=True, path='unprocessed/'):
@@ -78,10 +78,9 @@ def trip_expression(expressions_path, destination_folder):
 
 
 if __name__ == '__main__':
-    # trip_expression('data2', 'processed')
-    # exit()
+    seed(42)
     expressions = set()
-    number_of_expressions = 100
+    number_of_expressions = 1000
     while len(expressions) < number_of_expressions:
         question, answer = random_addition(999999)
         expressions.update([question])
