@@ -76,7 +76,7 @@ def trip_expression(expressions_path, destination_folder):
         img = Image.open(expressions_path + '/' + f)
         width, height = img.size
         img = img.crop((width - 107, 1, width, 10))
-        img = img.convert('LA')
+        img = img.convert('L')
         img.save(f'{destination_folder}/{f}')
 
 
