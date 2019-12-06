@@ -1,12 +1,11 @@
 from sympy import *
 from random import randint
 from PIL import Image
-from os import listdir
+from os import listdir, makedirs
 from os.path import isfile,join
 
 
-
-def form_image(content, fix_size=True, path='data2/'):
+def form_image(content, fix_size=True, path='unprocessed/'):
     """
     Given a string (content) creates a picture that has that expression (evaluated in LaTex).
     """
@@ -18,13 +17,14 @@ def form_image(content, fix_size=True, path='data2/'):
                 \\begin{document}\\"
 
     file_name = content
+    makedirs(path, exist_ok=True)
     if fix_size:
         # latex = '.  \\scalebox{1.2}{$' + content + '$}.'
         latex = 'I\\texttt{' + content + '}\\\\I'
-        yield preview(latex, output='png', viewer='file', filename=f'{path}{file_name}.png', preamble=preamble)
+        preview(latex, output='png', viewer='file', filename=f'{path}{file_name}.png', preamble=preamble)
     else:
         latex = f'${content}$'
-        yield preview(latex, output='png', viewer='file', filename=f'{path}{file_name}.png')
+        preview(latex, output='png', viewer='file', filename=f'{path}{file_name}.png')
 
 
 def random_addition(largest_possible_value=1000):
@@ -78,10 +78,10 @@ def trip_expression(expressions_path, destination_folder):
 
 
 if __name__ == '__main__':
-    trip_expression('data2', 'processed')
-    exit()
+    # trip_expression('data2', 'processed')
+    # exit()
     expressions = set()
-    number_of_expressions = 1
+    number_of_expressions = 100
     while len(expressions) < number_of_expressions:
         question, answer = random_addition(999999)
         expressions.update([question])
