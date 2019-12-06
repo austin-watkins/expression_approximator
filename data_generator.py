@@ -69,11 +69,14 @@ def multi_threaded_printing(expressions):
 
 
 def trip_expression(expressions_path, destination_folder):
+    makedirs(destination_folder, exist_ok=True)
+    makedirs(expressions_path, exist_ok=True)
     files = [f for f in listdir(expressions_path) if isfile(join(expressions_path, f))]
     for f in files:
         img = Image.open(expressions_path + '/' + f)
         width, height = img.size
         img = img.crop((width - 107, 1, width, 10))
+        img = img.convert('LA')
         img.save(f'{destination_folder}/{f}')
 
 
