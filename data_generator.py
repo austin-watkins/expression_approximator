@@ -81,8 +81,8 @@ def trip_expression(expressions_path, destination_folder):
 
 
 if __name__ == '__main__':
-    # trip_expression('unprocessed', 'processed2/')
-    # exit()
+    #trip_expression('unprocessed/', 'processed/')
+    #exit()
     seed(42)
     expressions = set()
     number_of_expressions = 100000
