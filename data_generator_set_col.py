@@ -109,7 +109,7 @@ def generate_random_number_files(digit_generation):
     min = 0
     max = 9
 
-    for digit_len in digit_generation:
+    for digit_len in sorted(digit_generation.keys()):
         expressions_len += digit_generation[digit_len]
         while len(expressions) < expressions_len:
             rand_num = randint(min, max)
