@@ -5,7 +5,7 @@ from os import listdir, makedirs
 from os.path import isfile, join
 
 
-def form_image(content, fix_size=True, path='unprocessed/'):
+def form_image(content, fix_size=True, path='unprocessed/', top_right=True):
     """
     Given a string (content) creates a picture that has that expression (evaluated in LaTex).
     """
@@ -18,13 +18,18 @@ def form_image(content, fix_size=True, path='unprocessed/'):
 
     file_name = content
     makedirs(path, exist_ok=True)
-    latex = 'I\\texttt{' + content + '}\\\\I'
-    preview(latex, output='png', viewer='file', filename=f'{path}{file_name}.png')
+    if top_right:
+        latex = 'I\\texttt{' + content + '}\\\\I'
+        preview(latex, output='png', viewer='file', filename=f'{path}{file_name}.png')
+    else:
+        latex = '\\texttt{' + content + '}\\\\AAAAA'
+        preview(latex, output='png', viewer='file', filename=f'{path}{file_name}.png')
+
 
 def random_number(largest_possible_value=1000):
     number = randint(0, largest_possible_value)
-    expression = str(first_operand)
-    return expression, result
+    expression = str(number)
+    return expression, number
 
 def random_addition(largest_possible_value=1000):
     """
@@ -65,7 +70,7 @@ def random_addition(largest_possible_value=1000):
     return expression, result
 
 def helper(x):
-    return  form_image(x, path='test/')
+    return  form_image(x, path='test/', top_right=False)
 
 def multi_threaded_printing(expressions):
     """
@@ -91,19 +96,18 @@ def trip_expression(expressions_path, destination_folder):
     for f in files:
         img = Image.open(expressions_path + '/' + f)
         width, height = img.size
-        img = img.crop((width - 110, 1, width, 10))
+        #img = img.crop((width - 110, 1, width, 10))
+        img = img.crop((0, 0, 54, 13))
         img = img.convert('L')
         img.save(f'{destination_folder}/{f}')
 
 
 if __name__ == '__main__':
-    #trip_expression('unprocessed/', 'processed/')
-    #exit()
     seed(42)
     expressions = set()
-    number_of_expressions = 50
+    number_of_expressions = 100
     while len(expressions) < number_of_expressions:
-        question, answer = random_addition(999999)
+        question, answer = random_number(999999)
         expressions.update([question])
 
     import time
@@ -114,3 +118,4 @@ if __name__ == '__main__':
     print(f'Printing took:\n'
           f'\tTOTAL\t{delta:.3} seconds \n'
           f'\tAVERAGE\t{number_of_expressions/ delta :.4} exp/second')
+    trip_expression('test/', 'random_numbers/')
