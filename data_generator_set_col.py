@@ -113,7 +113,7 @@ def generate_random_number_files(digit_generation):
         expressions_len += digit_generation[digit_len]
         while len(expressions) < expressions_len:
             rand_num = randint(min, max)
-            expressions.add(rand_num)
+            expressions.add(str(rand_num))
 
         min = 10 ** (digit_len)
         max = (min * 9) + max
@@ -123,15 +123,11 @@ def generate_random_number_files(digit_generation):
     t0 = time.time()
     multi_threaded_printing(expressions)
     delta = time.time() - t0
-    print(f'Printing took:\n'
-          f'\tTOTAL\t{delta:.3} seconds \n'
-          f'\tAVERAGE\t{number_of_expressions/ delta :.4} exp/second')
+
+    trip_expression('test/', 'random_numbers/')
 
 
 if __name__ == '__main__':
-    #trip_expression('unprocessed/', 'processed/')
-    #exit()
-
     digit_generation = {1: 5,
                         2: 50,
                         3: 500,
