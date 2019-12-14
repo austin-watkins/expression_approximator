@@ -96,9 +96,45 @@ def trip_expression(expressions_path, destination_folder):
         img.save(f'{destination_folder}/{f}')
 
 
+def generate_random_number_files(digit_generation):
+    expressions = set()
+    expressions_len = 0
+
+    min = 0
+    max = 9
+
+    for digit_len in digit_generation:
+        expressions_len += digit_generation[digit_len]
+        while len(expressions) < expressions_len:
+            rand_num = randint(min, max)
+            expressions.add(rand_num)
+
+        min = 10 ** (digit_len)
+        max = (min * 9) + max
+
+    import time
+
+    t0 = time.time()
+    multi_threaded_printing(expressions)
+    delta = time.time() - t0
+    print(f'Printing took:\n'
+          f'\tTOTAL\t{delta:.3} seconds \n'
+          f'\tAVERAGE\t{number_of_expressions/ delta :.4} exp/second')
+
+
 if __name__ == '__main__':
     #trip_expression('unprocessed/', 'processed/')
     #exit()
+
+    digit_generation = {1: 5,
+                        2: 50,
+                        3: 500,
+                        4: 5000,
+                        5: 20000,
+                        6: 20000}
+    generate_random_number_files(digit_generation)
+    exit()
+
     seed(42)
     expressions = set()
     number_of_expressions = 50
