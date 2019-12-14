@@ -18,14 +18,8 @@ def form_image(content, fix_size=True, path='unprocessed/'):
 
     file_name = content
     makedirs(path, exist_ok=True)
-    if fix_size:
-        # latex = '.  \\scalebox{1.2}{$' + content + '$}.'
-        latex = 'I\\texttt{' + content + '}\\\\I'
-        preview(latex, output='png', viewer='file', filename=f'{path}{file_name}.png', preamble=preamble)
-    else:
-        latex = f'${content}$'
-        preview(latex, output='png', viewer='file', filename=f'{path}{file_name}.png')
-
+    latex = 'I\\texttt{' + content + '}\\\\I'
+    preview(latex, output='png', viewer='file', filename=f'{path}{file_name}.png')
 
 def random_addition(largest_possible_value=1000):
     """
@@ -65,6 +59,8 @@ def random_addition(largest_possible_value=1000):
     expression = tabular_format1 + joined_equation + tabular_format2
     return expression, result
 
+def helper(x):
+    return  form_image(x, path='test/')
 
 def multi_threaded_printing(expressions):
     """
@@ -78,7 +74,9 @@ def multi_threaded_printing(expressions):
         raise TypeError('expressions must be iterable.')
     cores = cpu_count()
     pool = Pool(processes=cores)
-    pool.map(form_image, expressions, 'test/')
+
+
+    pool.map(helper, expressions)
 
 
 def trip_expression(expressions_path, destination_folder):
@@ -98,13 +96,10 @@ if __name__ == '__main__':
     #exit()
     seed(42)
     expressions = set()
-    number_of_expressions = 1
+    number_of_expressions = 50
     while len(expressions) < number_of_expressions:
         question, answer = random_addition(999999)
         expressions.update([question])
-
-    form_image(question, path='test/')
-    exit()
 
     import time
 
