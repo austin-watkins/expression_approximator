@@ -21,6 +21,11 @@ def form_image(content, fix_size=True, path='unprocessed/'):
     latex = 'I\\texttt{' + content + '}\\\\I'
     preview(latex, output='png', viewer='file', filename=f'{path}{file_name}.png')
 
+def random_number(largest_possible_value=1000):
+    number = randint(0, largest_possible_value)
+    expression = str(first_operand)
+    return expression, result
+
 def random_addition(largest_possible_value=1000):
     """
     Given the largest possible value.
